@@ -1,0 +1,60 @@
+%rebase('osnova.html')
+
+%import model
+
+<div class="mx-auto" style="width: 200px;">
+<div class="container">
+  
+  
+   <br>
+    <p class="text-info" > Število min: <span id="st_bombic">{{igra.st_bombic}}</span></p>
+    <p class="text-info"> Število odkritih polj: <span id="st_odkritih">{{igra.st_odkritih}}</span></p>
+   <br>
+
+   <p class="text-center">Kliknite na izbrano polje </p>
+
+
+<table >
+<tbody>
+    %for i in range(igra.st_vrstic):
+      <tr>
+            %for j in range(igra.st_stolpcev):
+			  <td>         
+              %if igra.polje[i][j].odkrita == False:
+                  <form action="/{{i}}/{{j}}/" method="POST">
+                      <button type="submit" class="btn btn-dark" ></button>
+                  </form>
+              %else:
+                  {{igra.polje[i][j]}}
+              %end
+			  </td>
+		%end
+      <tr>
+    %end
+</tbody>
+</table>
+
+%if igra.zmaga == True:
+  <span>Čestitke, uspešno ste preživeli mino-lov
+      <img src="/slike/zmaga.jpg" alt="zmagovalec" /> 
+  </span>  
+
+  <form action="/nova_igra/" method="POST">
+    <button type="submit" class="btn btn-dark">Nova igra</button>
+  </form>
+
+%elif igra.poraz == True:
+  <span>BUMMM, ojej razneslo vas je!
+      <img src="/slike/poraz.jpg" alt="poraženec" />
+  
+  </span>
+  <form action="/nova_igra/" method="POST">
+    <button type="submit" class="btn btn-dark">Nova igra</button>
+  </form>
+
+%else:
+ %pass
+%end
+
+</div>
+</div>
